@@ -60,8 +60,8 @@ def kk(arr, new_arr=None, checked_count=0):
                 return new_arr
             arr[i] = -1
             return kk(arr, new_arr, checked_count)
-
-
+#
+#
 def partition(num, max_num=None):
     """
     partition(2, 2) = [[2], [1,1]] partition(3,3) = [[3], [2, 1], [1, 1, 1]]
@@ -83,25 +83,56 @@ def partition(num, max_num=None):
         max_num = num
     return partition(num, max_num - 1) + map(add_max, partition(num - max_num, max_num))
 
+def parti(num, max_num=None):
+    if max_num is None:
+        max_num = num+1
+    return partition(num, max_num-1)
 
-print partition(8)
+# print partition(8)
+# print parti(8, 9)
 
 
 #
 
-# def partition2(num, max_num=None):
-#     def add_max(arr):
-#         arr.append(max_num - 1)
-#         # print arr
-#         return arr
-#
-#     if max_num is None:
-#         max_num = num + 1
-#     if num == 0:
-#         return [[]]
-#     if max_num <= 1:
-#         return []
-#     return partition2(num, max_num - 1) + map(add_max, partition2(num - max_num + 1, num - max_num + 2))
-#
-#
+def partition2(num, max_num=None, cache=None):
+    cache = {} if cache is None else cache
+    max_num = max_num or num
+    k = "%s-%s" % (num, max_num)
+    if cache.get(k):
+        return cache[k]
+    if num == 1 or max_num == 1:
+        return 1
+    # elif num < max_num:
+    #     return partition2(num, num)
+    elif num <= max_num:
+        return 1 + partition2(num, num - 1)
+    res = partition2(num-max_num, max_num, cache) + partition2(num, max_num-1, cache)
+    cache[k] = res
+    return res
+
+
+def partition3(num, mx, arr=list(), prev=0):
+    # print num, mx
+    while mx > 0:
+        new_arr = arr[:]
+        if mx == prev:
+            pass
+        elif num-mx > mx:
+            return
+        elif num-mx > 0:
+            new_arr.append(mx)
+            partition3(num-mx, num-mx, new_arr, mx)
+        else:
+            new_arr.append(mx)
+            print new_arr
+        mx -= 1
+partition3(8, 8)
+
+
+# if __name__ == "__main__":
+#     print partition2(100)
+
+
+
+
 # print partition2(8)

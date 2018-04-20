@@ -111,21 +111,21 @@ def partition2(num, max_num=None, cache=None):
     return res
 
 
-def partition3(num, mx, arr=list(), prev=0):
+def partition3(num, mx, arr=list()):
     # print num, mx
     while mx > 0:
         new_arr = arr[:]
-        if mx == prev:
-            pass
-        elif num-mx > mx:
+        new_arr.append(mx)
+        if num-mx > mx:
             return
+        elif num-mx == mx:
+            partition3(num - mx, num-mx-1, new_arr)
         elif num-mx > 0:
-            new_arr.append(mx)
-            partition3(num-mx, num-mx, new_arr, mx)
+            partition3(num-mx, num-mx, new_arr)
         else:
-            new_arr.append(mx)
             print new_arr
         mx -= 1
+partition3(5, 5)
 partition3(8, 8)
 
 

@@ -15,9 +15,7 @@ var schedules2 = [
 
 function getStartTime(schedules, duration) {
     let cursor = [0,0,0];
-    let ix = getBeginIndex(...schedules.map(i => i[0]? i[0][0]: "").filter(i => i));
-    cursor[ix] += 1;
-    let [_begin, _end] = schedules[ix][0];
+    let _end = "09:00";
 
     function compare(endTime, _arr) {
         let c = 0;
@@ -44,18 +42,6 @@ function getStartTime(schedules, duration) {
         let h_str = (parseInt(time_arr[0]) + extra).toString();
         let m_str = f_m.toString();
         return `${ h_str.length > 1? h_str: "0" + h_str }:${ m_str.length > 1? m_str: "0" + m_str }`
-    }
-
-    function getBeginIndex(...rest) {
-        let min = "9";
-        let ix = 0;
-        rest.forEach((v, i) => {
-            if (v < min) {
-                min = v;
-                ix = i;
-            }
-        });
-        return ix
     }
 
     function max(...rest) {
